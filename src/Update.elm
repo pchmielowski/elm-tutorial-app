@@ -65,7 +65,7 @@ removePlayer : Model -> Player -> Model
 removePlayer model removed =
     let
         withoutRemoved currentPlayer =
-            removed.id == currentPlayer.id
+            removed.id /= currentPlayer.id
             
         updatePlayerList players =
             List.filter withoutRemoved players
