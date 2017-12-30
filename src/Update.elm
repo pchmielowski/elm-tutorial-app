@@ -1,6 +1,6 @@
 module Update exposing (..)
 
-import Commands exposing (savePlayerCmd, removePlayerCmd, addPlayerCmd)
+import Commands
 import Models exposing (Model, Player)
 import Msgs exposing (Msg)
 import Routing exposing (parseLocation)
@@ -25,13 +25,13 @@ update msg model =
                 updatedPlayer =
                     { player | level = player.level + howMuch }
             in
-                ( model, savePlayerCmd updatedPlayer )
+                ( model, Commands.savePlayerCmd updatedPlayer )
 
         Msgs.DeletePlayer player ->
-            ( model, removePlayerCmd player )
+            ( model, Commands.removePlayerCmd player )
 
         Msgs.AddPlayer player ->
-            ( model, addPlayerCmd player )
+            ( model, Commands.addPlayerCmd player )
 
         Msgs.OnPlayerSave (Ok player) ->
             ( updatePlayer model player, Cmd.none )
