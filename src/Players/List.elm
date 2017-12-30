@@ -9,14 +9,14 @@ import RemoteData exposing (WebData)
 import Routing exposing (playerPath)
 
 
-view : WebData (List Player) -> Html Msg
-view response =
+view : WebData (List Player) -> Maybe Player -> Html Msg
+view response new =
     div []
-        [ maybeList response
+        [ maybeList response new
         ]
 
-maybeList : WebData (List Player) -> Html Msg
-maybeList response =
+maybeList : WebData (List Player) -> Maybe Player -> Html Msg
+maybeList response new =
     case response of
         RemoteData.NotAsked ->
             text ""
@@ -25,14 +25,14 @@ maybeList response =
             text "Loading..."
 
         RemoteData.Success players ->
-            list players
+            list players new
 
         RemoteData.Failure error ->
             text (toString error)
 
 
-list : List Player -> Html Msg
-list players =
+list : List Player -> Maybe Player -> Html Msg
+list players new =
     div [ class "p2" ]
         [ table []
             [ thead []
@@ -43,7 +43,7 @@ list players =
                     , th [colspan 2] [ text "Actions" ]
                     ]
                 ]
-            , tbody [] (List.map playerRow players)
+            , tbody [] ( playerRow (Maybe.withDefault (Models.Player "0" "" 0) new) :: List.map playerRow players)
             ]
         , text "Add new: "
         , input [ placeholder "Id" ][]

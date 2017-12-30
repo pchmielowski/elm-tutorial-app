@@ -22,8 +22,7 @@ page model =
         Models.PlayersRoute ->
             div []
                 [ nav
-                , Players.List.playerRow (Maybe.withDefault (Models.Player "0" "" 0) model.new) 
-                , Players.List.view model.players ]
+                , Players.List.view model.players model.new ]
 
         Models.PlayerRoute id ->
             playerEditPage model id
