@@ -1,7 +1,7 @@
 module Players.List exposing (..)
 
 import Html exposing (..)
-import Html.Attributes exposing (class, href)
+import Html.Attributes exposing (class, href, colspan)
 import Html.Events exposing (onClick)
 import Models exposing (Player)
 import Msgs exposing (Msg)
@@ -48,7 +48,7 @@ list players =
                     [ th [] [ text "Id" ]
                     , th [] [ text "Name" ]
                     , th [] [ text "Level" ]
-                    , th [] [ text "Actions" ]
+                    , th [colspan 2] [ text "Actions" ]
                     ]
                 ]
             , tbody [] (List.map playerRow players)
