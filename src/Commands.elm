@@ -38,10 +38,28 @@ savePlayerRequest player =
         , withCredentials = False
         }
 
+removePlayerRequest : Player -> Http.Request Player
+removePlayerRequest player =
+    Http.request
+        { body = Http.emptyBody
+        , expect = Http.expectJson playerDecoder
+        , headers = []
+        , method = "DELETE"
+        , timeout = Nothing
+        , url = savePlayerUrl player.id
+        , withCredentials = False
+        }
+
 
 savePlayerCmd : Player -> Cmd Msg
 savePlayerCmd player =
     savePlayerRequest player
+        |> Http.send Msgs.OnPlayerSave
+
+
+removePlayerCmd : Player -> Cmd Msg
+removePlayerCmd player =
+    removePlayerRequest player
         |> Http.send Msgs.OnPlayerSave
 
 
