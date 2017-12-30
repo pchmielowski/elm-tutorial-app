@@ -1,7 +1,7 @@
 module Players.List exposing (..)
 
 import Html exposing (..)
-import Html.Attributes exposing (class, href, colspan)
+import Html.Attributes exposing (class, href, colspan, placeholder)
 import Html.Events exposing (onClick)
 import Models exposing (Player)
 import Msgs exposing (Msg)
@@ -53,6 +53,10 @@ list players =
                 ]
             , tbody [] (List.map playerRow players)
             ]
+        , text "Add new: "
+        , input [ placeholder "Id" ][]
+        , input [ placeholder "Name" ][]
+        , button [ ] [ text "OK" ]
         ]
 
 
