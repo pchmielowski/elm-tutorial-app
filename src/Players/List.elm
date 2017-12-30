@@ -43,7 +43,7 @@ list players new =
                     , th [colspan 2] [ text "Actions" ]
                     ]
                 ]
-            , tbody [] ( newPlayerRow new :: List.map playerRow players)
+            , tbody [] ( newPlayerRow new :: List.map editPlayerRow players)
             ]
         , text "Add new: "
         , input [ placeholder "Id" ][]
@@ -53,22 +53,53 @@ list players new =
 
 newPlayerRow : Maybe Player -> Html Msg
 newPlayerRow player =
-    Maybe.withDefault nothing (Maybe.map playerRow player)
+    let
+        toPlayerRow it =
+            playerRow it (addButton it)
+    in
+        Maybe.withDefault nothing (Maybe.map toPlayerRow player)
 
 nothing = text ""
 
-playerRow : Player -> Html Msg
-playerRow player =
+editPlayerRow : Player -> Html Msg
+editPlayerRow player =
+    playerRow player (editButtons player)
+
+playerRow : Player -> List (Html Msg) -> Html Msg
+playerRow player buttons =
     tr []
-        [ td [] [ text player.id ]
-        , td [] [ text player.name ]
-        , td [] [ text (toString player.level) ]
-        , td []
-            [ editBtn player ]
-        , td []
-            [ removeBtn player ]
+            ([ td [] [ text player.id ]
+            , td [] [ text player.name ]
+            , td [] [ text (toString player.level) ]
+            ]
+            ++
+            buttons)
+
+type alias ButtonCreator = Player -> List (Html Msg)
+
+addButton : ButtonCreator
+addButton player =
+    let
+        message =
+            Msgs.DeletePlayer player
+    in
+        [td []
+        [a
+            [ class "btn regular"
+            , onClick message
+            ]
+            [ i [ class "fa fa-plus" ] [], text "Add" ]
+        ]
         ]
 
+
+editButtons : ButtonCreator
+editButtons player =
+    [td []
+        [ editBtn player ]
+    , td []
+        [ removeBtn player ]
+    ]
 
 editBtn : Player -> Html.Html Msg
 editBtn player =
