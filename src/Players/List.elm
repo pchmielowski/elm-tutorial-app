@@ -43,7 +43,7 @@ list players new =
                     , th [colspan 2] [ text "Actions" ]
                     ]
                 ]
-            , tbody [] ( playerRow (Maybe.withDefault (Models.Player "0" "" 0) new) :: List.map playerRow players)
+            , tbody [] ( newPlayerRow new :: List.map playerRow players)
             ]
         , text "Add new: "
         , input [ placeholder "Id" ][]
@@ -51,6 +51,11 @@ list players new =
         , button [ ] [ text "OK" ]
         ]
 
+newPlayerRow : Maybe Player -> Html Msg
+newPlayerRow player =
+    Maybe.withDefault nothing (Maybe.map playerRow player)
+
+nothing = text ""
 
 playerRow : Player -> Html Msg
 playerRow player =
