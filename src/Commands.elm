@@ -39,6 +39,19 @@ savePlayerRequest player =
         }
 
 
+addPlayerRequest : Player -> Http.Request Player
+addPlayerRequest player =
+    Http.request
+        { body = playerEncoder player |> Http.jsonBody
+        , expect = ignoreResponseBody player
+        , headers = []
+        , method = "POST"
+        , timeout = Nothing
+        , url = fetchPlayersUrl
+        , withCredentials = False
+        }
+
+
 ignoreResponseBody : a -> Http.Expect a
 ignoreResponseBody player =
     Http.expectStringResponse (\response -> Ok player)
@@ -59,6 +72,11 @@ removePlayerRequest player =
 savePlayerCmd : Player -> Cmd Msg
 savePlayerCmd player =
     savePlayerRequest player
+        |> Http.send Msgs.OnPlayerSave
+
+addPlayerCmd : Player -> Cmd Msg
+addPlayerCmd player =
+    addPlayerRequest player
         |> Http.send Msgs.OnPlayerSave
 
 

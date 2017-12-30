@@ -1,6 +1,6 @@
 module Update exposing (..)
 
-import Commands exposing (savePlayerCmd, removePlayerCmd)
+import Commands exposing (savePlayerCmd, removePlayerCmd, addPlayerCmd)
 import Models exposing (Model, Player)
 import Msgs exposing (Msg)
 import Routing exposing (parseLocation)
@@ -29,6 +29,9 @@ update msg model =
 
         Msgs.DeletePlayer player ->
             ( model, removePlayerCmd player )
+
+        Msgs.AddPlayer player ->
+            ( model, addPlayerCmd player )
 
         Msgs.OnPlayerSave (Ok player) ->
             ( updatePlayer model player, Cmd.none )

@@ -77,7 +77,7 @@ addButton : ButtonCreator
 addButton player =
     let
         message =
-            Msgs.DeletePlayer player
+            Msgs.AddPlayer player
     in
         [td []
         [a

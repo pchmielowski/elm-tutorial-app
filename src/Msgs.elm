@@ -11,6 +11,7 @@ type Msg
     | OnLocationChange Location
     | ChangeLevel Player Int
     | DeletePlayer Player
+    | AddPlayer Player
     | OnPlayerSave (Result Http.Error Player)
     | OnPlayerRemoved (Result Http.Error Player)
     | ChangeName String
