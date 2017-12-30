@@ -12,16 +12,8 @@ import Routing exposing (playerPath)
 view : WebData (List Player) -> Html Msg
 view response =
     div []
-        [ nav
-        , maybeList response
+        [ maybeList response
         ]
-
-
-nav : Html Msg
-nav =
-    div [ class "clearfix mb2 white bg-black" ]
-        [ div [ class "left p2" ] [ text "Players" ] ]
-
 
 maybeList : WebData (List Player) -> Html Msg
 maybeList response =

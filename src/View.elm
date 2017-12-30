@@ -1,6 +1,7 @@
 module View exposing (..)
 
 import Html exposing (Html, div, text)
+import Html.Attributes exposing (class, href, colspan, placeholder)
 import Models exposing (Model, PlayerId)
 import Models exposing (Model)
 import Msgs exposing (Msg)
@@ -20,7 +21,8 @@ page model =
     case model.route of
         Models.PlayersRoute ->
             div []
-                [ Players.List.playerRow (Maybe.withDefault (Models.Player "0" "" 0) model.new) 
+                [ nav
+                , Players.List.playerRow (Maybe.withDefault (Models.Player "0" "" 0) model.new) 
                 , Players.List.view model.players ]
 
         Models.PlayerRoute id ->
@@ -29,6 +31,10 @@ page model =
         Models.NotFoundRoute ->
             notFoundView
 
+nav : Html Msg
+nav =
+    div [ class "clearfix mb2 white bg-black" ]
+        [ div [ class "left p2" ] [ text "Players" ] ]
 
 playerEditPage : Model -> PlayerId -> Html Msg
 playerEditPage model playerId =
