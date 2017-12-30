@@ -62,19 +62,15 @@ updatePlayer model updatedPlayer =
         { model | players = updatedPlayers }
 
 removePlayer : Model -> Player -> Model
-removePlayer model updatedPlayer =
+removePlayer model removed =
     let
-        pick currentPlayer =
-            if updatedPlayer.id == currentPlayer.id then
-                False
-            else
-                True
-
+        withoutRemoved currentPlayer =
+            removed.id == currentPlayer.id
+            
         updatePlayerList players =
-            List.filter pick players
+            List.filter withoutRemoved players
 
         updatedPlayers =
             RemoteData.map updatePlayerList model.players
-            -- RemoteData.Loading
     in
         { model | players = updatedPlayers }
