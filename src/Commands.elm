@@ -38,11 +38,16 @@ savePlayerRequest player =
         , withCredentials = False
         }
 
+
+ignoreResponseBody : a -> Http.Expect a
+ignoreResponseBody player =
+    Http.expectStringResponse (\response -> Ok player)
+
 removePlayerRequest : Player -> Http.Request Player
 removePlayerRequest player =
     Http.request
         { body = Http.emptyBody
-        , expect = Http.expectJson playerDecoder
+        , expect = ignoreResponseBody player
         , headers = []
         , method = "DELETE"
         , timeout = Nothing
@@ -60,7 +65,7 @@ savePlayerCmd player =
 removePlayerCmd : Player -> Cmd Msg
 removePlayerCmd player =
     removePlayerRequest player
-        |> Http.send Msgs.OnPlayerSave
+        |> Http.send Msgs.OnPlayerRemoved
 
 
 

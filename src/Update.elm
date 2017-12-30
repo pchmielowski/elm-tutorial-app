@@ -28,13 +28,20 @@ update msg model =
                 ( model, savePlayerCmd updatedPlayer )
 
         Msgs.DeletePlayer player ->
-                ( model, removePlayerCmd player )
+            ( model, removePlayerCmd player )
 
         Msgs.OnPlayerSave (Ok player) ->
             ( updatePlayer model player, Cmd.none )
 
         Msgs.OnPlayerSave (Err error) ->
             ( model, Cmd.none )
+
+        Msgs.OnPlayerRemoved (Ok player) ->
+            ( removePlayer model player, Cmd.none )
+
+        Msgs.OnPlayerRemoved (Err error) ->
+            Debug.crash (toString error)
+            -- ( model, Cmd.none )
 
 
 updatePlayer : Model -> Player -> Model
@@ -51,5 +58,23 @@ updatePlayer model updatedPlayer =
 
         updatedPlayers =
             RemoteData.map updatePlayerList model.players
+    in
+        { model | players = updatedPlayers }
+
+removePlayer : Model -> Player -> Model
+removePlayer model updatedPlayer =
+    let
+        pick currentPlayer =
+            if updatedPlayer.id == currentPlayer.id then
+                False
+            else
+                True
+
+        updatePlayerList players =
+            List.filter pick players
+
+        updatedPlayers =
+            RemoteData.map updatePlayerList model.players
+            -- RemoteData.Loading
     in
         { model | players = updatedPlayers }
