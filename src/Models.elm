@@ -5,6 +5,7 @@ import RemoteData exposing (WebData)
 
 type alias Model =
     { players : WebData (List Player)
+    , new : Maybe Player
     , route : Route
     }
 
@@ -12,6 +13,7 @@ type alias Model =
 initialModel : Route -> Model
 initialModel route =
     { players = RemoteData.Loading
+    , new = Nothing
     , route = route
     }
 

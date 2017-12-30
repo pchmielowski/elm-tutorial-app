@@ -13,3 +13,4 @@ type Msg
     | DeletePlayer Player
     | OnPlayerSave (Result Http.Error Player)
     | OnPlayerRemoved (Result Http.Error Player)
+    | ChangeName String

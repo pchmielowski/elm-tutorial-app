@@ -43,6 +43,9 @@ update msg model =
             Debug.crash (toString error)
             -- ( model, Cmd.none )
 
+        Msgs.ChangeName name ->
+            ( {model | new = Maybe.Just (Player "0" name 0)}, Cmd.none )
+
 
 updatePlayer : Model -> Player -> Model
 updatePlayer model updatedPlayer =

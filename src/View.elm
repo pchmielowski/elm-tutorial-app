@@ -19,7 +19,9 @@ page : Model -> Html Msg
 page model =
     case model.route of
         Models.PlayersRoute ->
-            Players.List.view model.players
+            div []
+                [ Players.List.playerRow (Maybe.withDefault (Models.Player "0" "" 0) model.new) 
+                , Players.List.view model.players ]
 
         Models.PlayerRoute id ->
             playerEditPage model id
