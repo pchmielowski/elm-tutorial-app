@@ -39,6 +39,12 @@ update msg model =
         Msgs.OnPlayerSave (Err error) ->
             ( model, Cmd.none )
 
+        Msgs.OnPlayerAdded (Ok player) ->
+            ( addPlayer model player, Cmd.none )
+
+        Msgs.OnPlayerAdded (Err error) ->
+            Debug.crash (toString error)
+
         Msgs.OnPlayerRemoved (Ok player) ->
             ( removePlayer model player, Cmd.none )
 
@@ -47,7 +53,7 @@ update msg model =
             -- ( model, Cmd.none )
 
         Msgs.ChangeName name ->
-            ( {model | new = Maybe.Just (Player "0" name 0)}, Cmd.none )
+            ( {model | new = Maybe.Just (Player "78" name 0)}, Cmd.none )
 
 
 updatePlayer : Model -> Player -> Model
@@ -66,6 +72,20 @@ updatePlayer model updatedPlayer =
             RemoteData.map updatePlayerList model.players
     in
         { model | players = updatedPlayers }
+
+addPlayer : Model -> Player -> Model
+addPlayer model updatedPlayer =
+    let
+        updatePlayerList players =
+            updatedPlayer :: players
+
+        updatedPlayers =
+            RemoteData.map updatePlayerList model.players
+    in
+        { model | 
+            players = updatedPlayers, 
+            new = Nothing    
+        }
 
 removePlayer : Model -> Player -> Model
 removePlayer model removed =

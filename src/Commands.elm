@@ -77,7 +77,7 @@ savePlayerCmd player =
 addPlayerCmd : Player -> Cmd Msg
 addPlayerCmd player =
     addPlayerRequest player
-        |> Http.send Msgs.OnPlayerSave
+        |> Http.send Msgs.OnPlayerAdded
 
 
 removePlayerCmd : Player -> Cmd Msg
