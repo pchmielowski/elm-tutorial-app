@@ -1,6 +1,7 @@
 module View exposing (..)
 
-import Html exposing (Html, div, text)
+import Html exposing (Html, div, text, input)
+import Html.Events exposing (onInput)
 import Html.Attributes exposing (class, href, colspan, placeholder)
 import Models exposing (Model, PlayerId)
 import Models exposing (Model)
@@ -22,7 +23,11 @@ page model =
         Models.PlayersRoute ->
             div []
                 [ nav
-                , Players.List.view model.players model.new ]
+                , Players.List.view model.players model.new        
+                , text "Add new: "
+                , input [ placeholder "Id" ][]
+                , input [ placeholder "Name", onInput Msgs.ChangeName ][]
+                ]
 
         Models.PlayerRoute id ->
             playerEditPage model id

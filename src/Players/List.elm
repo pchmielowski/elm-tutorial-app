@@ -2,7 +2,7 @@ module Players.List exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (class, href, colspan, placeholder)
-import Html.Events exposing (onClick, onInput)
+import Html.Events exposing (onClick)
 import Models exposing (Player)
 import Msgs exposing (Msg)
 import RemoteData exposing (WebData)
@@ -45,10 +45,6 @@ list players new =
                 ]
             , tbody [] ( newPlayerRow new :: List.map editPlayerRow players)
             ]
-        , text "Add new: "
-        , input [ placeholder "Id" ][]
-        , input [ placeholder "Name", onInput Msgs.ChangeName ][]
-        , button [ ] [ text "OK" ]
         ]
 
 newPlayerRow : Maybe Player -> Html Msg
